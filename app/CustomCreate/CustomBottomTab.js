@@ -44,7 +44,6 @@ const CustomBottomTab = ({ state, descriptors, navigation }) =>
             onPress={onPress}
             onLongPress={onLongPress}
             style={{ flex: 1 }}>
-                <Icon name="Home" />
           </TouchableOpacity>
         );
       })}
