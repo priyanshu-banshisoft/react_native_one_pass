@@ -40,7 +40,11 @@
       "url": "https://u.expo.dev/a0ef0f49-0d17-4aef-a781-05be75f6fb22"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      ["expo-image-picker",
+      {
+        "photosPermission": "The app accesses your photos to let you share them with your friends."
+      }]
     ]
   }
 }

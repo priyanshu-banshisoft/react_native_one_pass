@@ -5,16 +5,20 @@ import {NavigationContainer} from '@react-navigation/native';
 import LoginScreen from './app/screens/Login';
 import Dashboard from './app/screens/Dashboard';
 import BottomNavigation from './app/routing/BottomNavigation';
+import OtpScreen from './app/screens/OtpScreen';
+import EditProfile from './app/screens/EditProfile';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-  const isLogin = false;
+  const isLogin = true;
   return (
     <NavigationContainer>
       {isLogin ? 
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Dashboard'>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='EditProfile'>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Screen name="OtpScreen" component={OtpScreen} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
       </Stack.Navigator>
     : <BottomNavigation/>}
     </NavigationContainer>

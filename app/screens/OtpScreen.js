@@ -6,31 +6,25 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  FlatList,
+  Pressable,
+  Keyboard,
 } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import Svg, { G, Path, Defs, ClipPath, Rect } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
+import OTPInput from "../CustomCreate/OTPInput";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [hidePassword, setHidePassword] = useState(true);
-  const navigation = useNavigation();
-  const handleLogin = () => {
-    if (username.length == 0) {
-      console.error("Please enter email address");
-      return;
-    }
-    if (password.length == 0) {
-      console.error("Please enter Password");
-      return;
-    }
-    navigation.navigate("OtpScreen");
-  };
-  const togglePasswordVisibility = () => {
-    setHidePassword(!hidePassword);
-  };
-
+const OtpScreen = () => {
+    const [otpCode, setOTPCode] = useState("");
+   const [isPinReady, setIsPinReady] = useState(false);
+   const navigation = useNavigation();
+   const maximumCodeLength = 4;
+   const handleDashboard = () => {
+    if(otpCode === "1234") {
+    navigation.navigate("Dashboard");
+   }
+}
   return (
     <View style={styles.container}>
       <Svg
@@ -45,44 +39,18 @@ const LoginScreen = () => {
           fill="#FF6464"
         />
       </Svg>
-
-      <Text style={styles.title}>LOGIN</Text>
-      <Text style={styles.description}>
-        Let’s get you setup with a new account!{" "}
-      </Text>
-      <Text style={styles.emailTxt}>EMAIL</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="john@example.com"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
+      <Image source={require('../../assets/AppName.png')}  
+      style={styles.image}
       />
-      <Text style={styles.emailTxt}>PASSWORD</Text>
-      <View
-        style={[styles.input,{flexDirection: "row",}]}>
-        <TextInput
-          style={styles.passwordInput}
-          placeholder="Password"
-          secureTextEntry={hidePassword}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
-        <TouchableOpacity
-          onPress={togglePasswordVisibility}
-          style={styles.visibilityIcon}
-        >
-          <Ionicons
-            name={hidePassword ? "eye-off" : "eye"}
-            size={24}
-            color="#FF6464"
-          />
-        </TouchableOpacity>
-      </View>
-      <Text style={[{ color: "#FF6464", alignSelf: "center", marginTop: 10 }]}>
-        Forgot Password
-      </Text>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>LOGIN</Text>
+      <Text style={styles.title}>Enter OTP</Text>
+      <OTPInput
+        code={otpCode}
+        setCode={setOTPCode}
+        maximumLength={maximumCodeLength}
+        setIsPinReady={setIsPinReady}
+      />
+        <TouchableOpacity style={styles.button} onPress={handleDashboard}>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
   );
@@ -101,56 +69,32 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginTop: 10,
-    color: "#545974",
-  },
-  description: {
-    color: "#BABABA",
-    fontSize: 12,
-    fontWeight: "400",
-  },
-  emailTxt: {
     marginTop: 20,
-    marginStart: 10,
+    color: "#545974",
+    alignSelf:'center',
+    marginBottom: 20,
   },
-
-  input: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#ffffff",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    marginBottom: 10,
+  image: {
+    height:100,
+    width:100,
+    alignSelf:'center',
+    marginTop:120,
   },
   button: {
-    width: "100%",
-    height: 40,
+    width: "50%",
+    height: 50,
     backgroundColor: "#FF6464",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     borderRadius: 15,
-    marginTop: 20,
+    marginTop: 50,
   },
   buttonText: {
     color: "#ffffff",
     fontSize: 18,
     fontWeight: "bold",
   },
-  passwordInput: {
-    flex: 1,
-    width: "100%",
-    height: 50,
-    borderRadius: 15,
-  },
-  visibilityIcon: {
-    padding: 10,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-    backgroundColor: "#ffffff",
-  },
 });
 
-export default LoginScreen;
+export default OtpScreen;
