@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useRef,useEffect} from "react";
 import {
   View,
   Text,
@@ -11,8 +11,11 @@ import {
 } from "react-native";
 import Svg, { G, Path, Defs, ClipPath, Rect } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
+import LottieView from 'lottie-react-native';
 
 const Dashboard = () => {
+  const [isTrue, setTrue] = useState(false); 
+  const animation = useRef(null);
   const [search, setSearch] = useState("");
   const [isFocused, setFocused] = useState(false);
   const list = [
@@ -22,7 +25,11 @@ const Dashboard = () => {
     { name: "Amazon", logo: "https://img.icons8.com/2266EE/amazon" },
     { name: "Microsoft", logo: "https://img.icons8.com/2266EE/microsoft" },
   ];
-
+  useEffect(() => {
+   setTimeout(() => {
+    setTrue(true);
+   },5000);
+  }, []);
   const [data, setData] = useState(list);
   const searchFunction = (text) => {
     setSearch(text);
@@ -98,6 +105,17 @@ const Dashboard = () => {
           onBlur={() => setFocused(false)}
         />
       </View>
+      {!isTrue ? <LottieView
+        autoPlay
+        ref={animation}
+        style={{
+          width: 200,
+          height: 200,
+          marginTop:10,
+          marginHorizontal:10,
+        }}
+        source={require('../../assets/simmerLoad.json')}
+      /> :
       <FlatList
         data={data}
         extraData={data}
@@ -145,6 +163,7 @@ const Dashboard = () => {
           </View>
         )}
       />
+          }
     </View>
   );
 };

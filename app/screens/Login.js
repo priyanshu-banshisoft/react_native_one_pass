@@ -10,6 +10,8 @@ import {
 import Svg, { Path } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import * as LocalAuthentication from 'expo-local-authentication';
+
 
 const LoginScreen = () => {
   const [username, setUsername] = useState("");
@@ -27,6 +29,16 @@ const LoginScreen = () => {
     }
     navigation.navigate("OtpScreen");
   };
+
+  const handleBioMetric = () => {
+    LocalAuthentication.authenticateAsync().then((LocalAuthenticationResult) => {
+      if(LocalAuthenticationResult.success){
+        navigation.navigate("Dashboard");
+      }
+    });
+
+  };
+
   const togglePasswordVisibility = () => {
     setHidePassword(!hidePassword);
   };
@@ -83,6 +95,9 @@ const LoginScreen = () => {
       </Text>
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>LOGIN</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleBioMetric}>
+        <Text style={styles.buttonText}>BioMetric Login</Text>
       </TouchableOpacity>
     </View>
   );
