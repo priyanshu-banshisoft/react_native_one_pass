@@ -8,6 +8,8 @@ import {
   Image,
   FlatList,
   Clipboard,
+  BackHandler,
+  Keyboard
 } from "react-native";
 import Svg, { G, Path, Defs, ClipPath, Rect } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
@@ -43,6 +45,24 @@ const Dashboard = () => {
       setData(filteredData);
     }
   };
+  const [keyboardStatus, setKeyboardStatus] = useState('');
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setFocused(true);
+      setKeyboardStatus('Keyboard Shown');
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setFocused(false);
+      setKeyboardStatus('Keyboard Hidden');
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <Svg
